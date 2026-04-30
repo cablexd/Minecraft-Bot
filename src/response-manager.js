@@ -5,7 +5,7 @@ import { chat, moveTo } from './minecraft-client.js'
 export function handleResponse(response) {
     console.info(`Handling response:`, response)
     handleChat(response)
-    handleMoveTo(response)
+    handleMove(response)
     handleMemories(response)
 }
 
@@ -15,9 +15,9 @@ function handleChat(response) {
     }
 }
 
-function handleMoveTo(response) {
-    if (response.moveTo != null) {
-        const pos = response.moveTo.split(',').map(Number)
+function handleMove(response) {
+    if (response.move != null) {
+        const pos = response.move.split(',').map(Number)
         moveTo(pos[0], pos[1], pos[2])
     }
 }
@@ -26,26 +26,26 @@ function handleMemories(response) {
 
     /* Add Memories */
 
-    if (response.addShortTermMemories) {
-        for (let memory of response.addShortTermMemories) {
+    if (response.addShort) {
+        for (let memory of response.addShort) {
             addShortTermMemory(memory)
         }
     }
-    if (response.addLongTermMemories) {
-        for (let memory of response.addLongTermMemories) {
+    if (response.addLong) {
+        for (let memory of response.addLong) {
             addLongTermMemory(memory)
         }
     }
 
     /* Remove Memories */
 
-    if (response.forgetShortTermMemories) {
-        for (let id of response.forgetShortTermMemories) {
+    if (response.forgetShort) {
+        for (let id of response.forgetShort) {
             removeShortTermMemory(id)
         }
     }
-    if (response.forgetLongTermMemories) {
-        for (let id of response.forgetLongTermMemories) {
+    if (response.forgetLong) {
+        for (let id of response.forgetLong) {
             removeLongTermMemory(id)
         }
     }

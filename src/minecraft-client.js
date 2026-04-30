@@ -42,7 +42,7 @@ export function chat(message) {
 export function getSurroundingBlocks() {
     checkInitialized()
 
-    const radius = 3
+    const radius = 1
     const blocks = []
 
     for (let x = -radius; x <= radius; x++) {

@@ -5,18 +5,18 @@ import { STATE } from './state-manager.js'
 import { promptLlm } from './llm-client.js'
 import { getSurroundingBlocks } from './minecraft-client.js'
 
-function getData() {
+function generateData(eventData) {
     const data = {}
+    data.event = eventData
     data.position = `${parseInt(STATE.position.x)},${parseInt(STATE.position.y)},${parseInt(STATE.position.z)}`
-    data.relativeBlocks = getSurroundingBlocks()
     data.shortTermMemories = shortTermMemories
     data.longTermMemories = longTermMemories
+    data.relativeBlocks = getSurroundingBlocks()
     return data
 }
 
 export async function sendEvent(eventData) {
-    const data = getData()
-    data.event = eventData
+    const data = generateData(eventData)
 
     const prompt = await generatePrompt('simple-bot', {
         name: 'Blake',
@@ -24,7 +24,6 @@ export async function sendEvent(eventData) {
     })
 
     console.info('Prompting:', prompt)
-    console.info('Data:', data)
 
     const response = await promptLlm(prompt)
 
@@ -37,7 +36,7 @@ export async function sendEvent(eventData) {
 }
 
 async function generatePrompt(templateName, data = {}) {
-    const filePath = path.join(process.cwd(), 'prompt-templates', `${templateName}.txt`)
+    const filePath = path.join(process.cwd(), 'prompt-templates', `${templateName}.md`)
 
     try {
         let template = await fs.readFile(filePath, 'utf8')
