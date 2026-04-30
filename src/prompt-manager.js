@@ -1,31 +1,38 @@
 import fs from 'fs/promises'
 import path from 'path'
+import { shortTermMemories, longTermMemories } from './memories-manager.js'
+import { STATE } from './state-manager.js'
 import { promptLlm } from './llm-client.js'
-import { shortTermMemories, longTermMemories } from './memory-manager.js'
-import { state } from './state.js'
+import { getSurroundingBlocks } from './minecraft-client.js'
 
-function addData(data) {
-    data.position = `${state.position.x},${state.position.y},${state.position.z}`
+function getData() {
+    const data = {}
+    data.position = `${parseInt(STATE.position.x)},${parseInt(STATE.position.y)},${parseInt(STATE.position.z)}`
+    data.relativeBlocks = getSurroundingBlocks()
     data.shortTermMemories = shortTermMemories
     data.longTermMemories = longTermMemories
     return data
 }
 
-export async function sendEvent(data) {
-    addData(data)
+export async function sendEvent(eventData) {
+    const data = getData()
+    data.event = eventData
+
     const prompt = await generatePrompt('simple-bot', {
-        name: 'Lark',
+        name: 'Blake',
         userMessage: JSON.stringify(data)
     })
 
     console.info('Prompting:', prompt)
     console.info('Data:', data)
+
     const response = await promptLlm(prompt)
 
     try {
         return JSON.parse(response.response)
     } catch (err) {
-        console.error('Invalid LLM json response:', err)
+        console.error('Invalid LLM json response:', err, response.response)
+        return null
     }
 }
 

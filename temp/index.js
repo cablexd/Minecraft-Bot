@@ -1,6 +1,6 @@
 const mineflayer = require('mineflayer')
 const { pathfinder, Movements, goals: { GoalNear, GoalFollow } } = require('mineflayer-pathfinder')
-const { Vec3 } = require('vec3');
+const { Vec3 } = require('vec3')
 
 const bot = mineflayer.createBot({
     host: 'localhost',    // Change to your server IP

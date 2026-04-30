@@ -10,5 +10,12 @@ I find the way that LLMs act and respond very fascinating. More specifically, ho
 
 ## Project Stack
 
-- **LLM:** Qwen3.5 via Ollama running locally.
+- **LLM:** Qwen3.5 via Ollama running locally
 - **Minecraft client:** Mineflayer
+
+## Environment Variables
+
+Must have a `.env` file in the root directory with the following fields:
+
+- MINECRAFT_PORT
+- MINECRAFT_VERSION

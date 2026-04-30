@@ -1,8 +1,12 @@
+/*
+    Handles talking directly with the LLM and the context of the current session.
+*/
+
 import fs from 'fs/promises'
 
 const CONTEXT_FILE_NAME = 'context.csv'
 
-let context = loadContext()
+let context = [] //loadContext()
 
 export async function promptLlm(prompt) {
     const url = 'http://localhost:11434/api/generate'
@@ -41,7 +45,7 @@ async function loadContext() {
     try {
         const data = await fs.readFile(CONTEXT_FILE_NAME, 'utf8')
         const c = data.split(',')
-        return (c[0] === '') ? [] : c.map(v => parseInt(v))
+        return (c[0] === '') ? [] : c.map(Number)
     } catch (err) {
         if (err.code === 'ENOENT') {
             return []

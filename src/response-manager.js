@@ -1,10 +1,25 @@
-import { addShortTermMemory, addLongTermMemory, removeShortTermMemory, removeLongTermMemory } from './memory-manager.js'
-import { state } from './state.js'
+import { addShortTermMemory, addLongTermMemory, removeShortTermMemory, removeLongTermMemory } from './memories-manager.js'
+import { STATE } from './state-manager.js'
+import { chat, moveTo } from './minecraft-client.js'
 
 export function handleResponse(response) {
-    console.log(`Handling response:`, response)
-    handlePosition(response.moveTo)
+    console.info(`Handling response:`, response)
+    handleChat(response)
+    handleMoveTo(response)
     handleMemories(response)
+}
+
+function handleChat(response) {
+    if (response.chat != null) {
+        chat(response.chat)
+    }
+}
+
+function handleMoveTo(response) {
+    if (response.moveTo != null) {
+        const pos = response.moveTo.split(',').map(Number)
+        moveTo(pos[0], pos[1], pos[2])
+    }
 }
 
 function handleMemories(response) {
@@ -34,13 +49,4 @@ function handleMemories(response) {
             removeLongTermMemory(id)
         }
     }
-}
-
-function handlePosition(position) {
-    if (position == null) return
-
-    const parts = position.split(',')
-    state.position.x = parseInt(parts[0])
-    state.position.y = parseInt(parts[1])
-    state.position.z = parseInt(parts[2])
 }

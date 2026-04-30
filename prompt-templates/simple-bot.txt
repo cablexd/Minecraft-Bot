@@ -20,7 +20,6 @@ JSON Schema Definitions:
 "thoughts": (String) What you are currently thinking. No players can see this. You must always include this.
 "chat": (String, Optional) A message to send to the public game chat. All players can see this.
 "moveTo": (String "x,y,z", Optional) Use pathfinding to move to these absolute coordinates.
-"lookAt": (String "x,y,z", Optional) Rotates the bot's head to face a specific coordinate (useful for combat or mining).
 "addShortTermMemories": (array of plain strings, Optional) New short term memories that will be sent in every succeeding prompt until you delete them. Used for immediate goals or context.
 "addLongTermMemories": (array of plain strings, Optional) New long term memories that will be sent in every succeeding prompt until you delete them. Used for permanent facts (e.g., "Base at 100, 64, -200") for critical, long-standing information.
 "forgetShortTermMemories": (Integer array, Optional) Used to delete short term memories with the corresponding IDs.
