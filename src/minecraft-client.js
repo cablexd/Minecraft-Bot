@@ -42,29 +42,21 @@ export function chat(message) {
 export function getSurroundingBlocks() {
     checkInitialized()
 
-    const radius = 1
     const blocks = []
 
-    for (let x = -radius; x <= radius; x++) {
-        for (let y = -1; y <= 2; y++) {
-            for (let z = -radius; z <= radius; z++) {
-                const block = bot.blockAt(bot.entity.position.offset(x, y, z))
-
-                if (block.name !== 'air') {
-                    blocks.push({
-                        pos: [x, y, z],
-                        id: block.name
-                    })
-                }
-            }
-        }
+    const addBlock = block => {
+        blocks.push({
+            pos: [block.position.x, block.position.y, block.position.z],
+            id: block.name
+        })
     }
 
+    addBlock(bot.blockAt(bot.entity.position.offset(0, -1, 0))) // block standing on
     return blocks
 }
 
-export function moveTo(x, y, z) {
-    bot.pathfinder.setGoal(new goals.GoalBlock(x, y, z))
+export async function moveTo(x, y, z) {
+    await bot.pathfinder.goto(new goals.GoalBlock(x, y, z))
 }
 
 function createMovements() {

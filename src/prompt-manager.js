@@ -16,14 +16,14 @@ function generateData(eventData) {
 }
 
 export async function sendEvent(eventData) {
-    const systemPrompt = await generatePrompt('simple-bot-refined', {
+    const systemPrompt = await generatePrompt('simple-bot', {
         name: 'Blake'
     })
 
     const data = generateData(eventData)
     const prompt = JSON.stringify(data)
 
-    console.info('System prompt:', systemPrompt)
+    console.info('System prompt:', systemPrompt, '\n')
     console.info('Prompt:', data)
 
     const response = await promptLlm(systemPrompt, prompt)
@@ -36,14 +36,14 @@ export async function sendEvent(eventData) {
     }
 }
 
-async function generatePrompt(templateName, data = {}) {
+async function generatePrompt(templateName, placeholders = {}) {
     const filePath = path.join(process.cwd(), 'prompt-templates', `${templateName}.md`)
 
     try {
         let template = await fs.readFile(filePath, 'utf8')
 
-        // Iterate through data object to replace {{key}} with value
-        for (const [key, value] of Object.entries(data)) {
+        // replace placeholders {{key}} with value
+        for (const [key, value] of Object.entries(placeholders)) {
             const placeholder = new RegExp(`{{${key}}}`, 'g')
             template = template.replace(placeholder, value)
         }

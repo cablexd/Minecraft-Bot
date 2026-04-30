@@ -3,22 +3,33 @@ import { STATE } from './state-manager.js'
 import { chat, moveTo } from './minecraft-client.js'
 
 export function handleResponse(response) {
-    console.info(`Handling response:`, response)
-    handleChat(response)
-    handleMove(response)
+    console.info(`Handling response:`, JSON.stringify(response, null, 2))
     handleMemories(response)
+    handleActions(response)
 }
 
-function handleChat(response) {
-    if (response.chat != null) {
-        chat(response.chat)
-    }
-}
+async function handleActions(response) {
+    if (response.actions == null) return
 
-function handleMove(response) {
-    if (response.move != null) {
-        const pos = response.move.split(',').map(Number)
-        moveTo(pos[0], pos[1], pos[2])
+    const { actions } = response
+
+    for (let action of actions) {
+        console.info(`Handling action: ${action.type}`)
+
+        switch (action.type) {
+            case 'chat':
+                chat(action.message)
+                break
+            case 'move':
+                const pos = action.pos.split(',').map(Number)
+                try {
+                    await moveTo(pos[0], pos[1], pos[2])
+                } catch (err) {
+                    console.error('Minecraft client failed to move:', err)
+                }
+
+                break
+        }
     }
 }
 
