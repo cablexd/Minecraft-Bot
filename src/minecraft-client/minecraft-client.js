@@ -1,7 +1,8 @@
 import mineflayer from 'mineflayer'
 import mineflayerPathfinder from 'mineflayer-pathfinder'
 import minecraftData from 'minecraft-data'
-import { STATE } from './state-manager.js'
+import { STATE } from '../state-manager.js'
+import { getNearbyBlocksInternal as getSignificantBlocksInternal } from './block-selector.js'
 
 const { pathfinder, Movements, goals } = mineflayerPathfinder
 
@@ -43,20 +44,9 @@ export function whisper(username, message) {
     bot.whisper(username, message)
 }
 
-export function getSurroundingBlocks() {
+export function getSignificantBlocks() {
     checkInitialized()
-
-    const blocks = []
-
-    const addBlock = block => {
-        blocks.push({
-            pos: [block.position.x, block.position.y, block.position.z],
-            id: block.name
-        })
-    }
-
-    addBlock(bot.blockAt(bot.entity.position.offset(0, -1, 0))) // block standing on
-    return blocks
+    return getSignificantBlocksInternal(bot)
 }
 
 export async function moveTo(x, y, z) {

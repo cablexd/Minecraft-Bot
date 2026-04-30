@@ -2,14 +2,20 @@ import fs from 'fs/promises'
 import path from 'path'
 import { STATE } from './state-manager.js'
 import { promptLlm } from './llm-client.js'
-import { getSurroundingBlocks } from './minecraft-client.js'
+import { getSignificantBlocks } from './minecraft-client/minecraft-client.js'
 
 function generateData(eventData) {
     const data = {}
     data.event = eventData
-    data.position = `${parseInt(STATE.position.x)},${parseInt(STATE.position.y)},${parseInt(STATE.position.z)}`
+    data.position = [parseInt(STATE.position.x), parseInt(STATE.position.y), parseInt(STATE.position.z)]
     data.memories = STATE.memories
-    data.relativeBlocks = getSurroundingBlocks()
+    data.significantBlocks = getSignificantBlocks()
+
+    // add relative position for significant blocks
+    for (let block of data.significantBlocks) {
+        block.rel = [block.pos[0] - data.position[0], block.pos[1] - data.position[1], block.pos[2] - data.position[2]]
+    }
+
     return data
 }
 
@@ -23,6 +29,7 @@ export async function sendEvent(eventData) {
 
     console.info('System prompt:', systemPrompt, '\n')
     console.info('Prompt:', data)
+    console.info('Significant blocks:', data.significantBlocks)
 
     const response = await promptLlm(systemPrompt, prompt)
 

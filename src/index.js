@@ -1,10 +1,15 @@
 import 'dotenv/config'
 import { saveState } from './state-manager.js'
-import { connect as connectMinecraftClient } from './minecraft-client.js'
+import { connect as connectMinecraftClient } from './minecraft-client/minecraft-client.js'
 import { start } from './orchestrator.js'
 
+let exited = false
+
 function onExit() {
-    saveMemoriesToFile()
+    if (exited) return
+    exited = true
+
+    console.log('onExit()')
     saveState()
 }
 

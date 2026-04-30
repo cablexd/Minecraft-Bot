@@ -2,7 +2,7 @@
     Orchestrates the agentic loop by putting all managers together.
 */
 
-import { getBot } from './minecraft-client.js'
+import { getBot } from './minecraft-client/minecraft-client.js'
 import { sendEvent } from './prompt-manager.js'
 import { handleResponse } from './response-manager.js'
 

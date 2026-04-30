@@ -6,9 +6,7 @@ export const STATE = loadState()
 
 export function saveState() {
     try {
-        console.info('Saving state')
-        const jsonString = JSON.stringify(STATE, null, 2)
-        fs.writeFileSync(FILE_PATH, jsonString, 'utf8')
+        fs.writeFileSync(FILE_PATH, JSON.stringify(STATE, null, 2), 'utf8')
     } catch (err) {
         console.error(`Error saving JSON to ${FILE_PATH}:`, err)
     }
@@ -55,3 +53,7 @@ export function addMemory(memory, priority, category) {
 export function removeMemory(id) {
     STATE.memories = STATE.memories.filter(m => m.id !== id)
 }
+
+setInterval(() => {
+    saveState()
+}, 1000)

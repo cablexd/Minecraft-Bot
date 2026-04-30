@@ -6,7 +6,7 @@ import fs from 'fs/promises'
 
 const CONTEXT_FILE_NAME = 'context.csv'
 
-let context = [] //loadContext()
+let context = loadContext()
 
 export async function promptLlm(systemPrompt, prompt) {
     const url = 'http://localhost:11434/api/generate'
