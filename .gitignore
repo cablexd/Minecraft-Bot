@@ -42,3 +42,6 @@ coverage/
 
 # Project specific
 context.csv
+short_term_memories.json
+long_term_memories.json
+state.json
