@@ -1,0 +1,60 @@
+{
+  "timestamp": 1715667890000,
+  "bot_state": {
+    "health": 20,
+    "armor": 10,
+    "oxygen": 20,
+    "pos": [140, 64, -85],
+    "held_item": "minecraft:stick",
+    "hotbar_slots": {
+      "0": "minecraft:sapling",
+      "1": "minecraft:stick",
+      "2": "minecraft:stick",
+      "3": "minecraft:coal_block",
+      "4": null
+    },
+    "current_goal": "mining_coal",
+    "status": "moving"
+  },
+  "nearby_entities": [
+    {
+      "id": "minecraft:creeper",
+      "pos": [-2, 62, 4],
+      "distance": 3.5,
+      "state": "approaching"
+    },
+    {
+      "id": "minecraft:pillager",
+      "pos": [50, 62, 100],
+      "distance": 120,
+      "state": "idle"
+    }
+  ],
+  "nearby_blocks": [
+    {
+      "id": "minecraft:coal_ore",
+      "pos": [-2, 61, 4],
+      "height_level": 61,
+      "block_type": "ore"
+    },
+    {
+      "id": "minecraft:dirt",
+      "pos": [0, 62, 0],
+      "height_level": 62,
+      "block_type": "ground"
+    }
+  ],
+  "resource_cache": {
+    "craftable_items": [
+      {"item": "minecraft:coal_block", "count": 2, "slots": [3]},
+      {"item": "minecraft:stick", "count": 10, "slots": [1, 2]}
+    ],
+    "missing_materials_for_current_goal": ["minecraft:coal_block"],
+    "available_tools": ["minecraft:iron_pickaxe"]
+  },
+  "environment": {
+    "sky_time": 10000,
+    "light_level": 12,
+    "biome": "plains"
+  }
+}

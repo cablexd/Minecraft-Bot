@@ -8,7 +8,7 @@ const CONTEXT_FILE_NAME = 'context.csv'
 
 let context = [] //loadContext()
 
-export async function promptLlm(prompt) {
+export async function promptLlm(systemPrompt, prompt) {
     const url = 'http://localhost:11434/api/generate'
 
     const response = await fetch(url, {
@@ -16,6 +16,7 @@ export async function promptLlm(prompt) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             model: 'qwen3.5',
+            system: systemPrompt,
             prompt,
             stream: false,
             think: false,

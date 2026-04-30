@@ -13,7 +13,7 @@ export function start() {
         if (username === bot.username) return // ignore bot's own messages
 
         const response = await sendEvent({
-            event: 'chat',
+            type: 'chat',
             user: username,
             message
         })

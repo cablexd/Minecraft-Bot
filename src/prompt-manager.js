@@ -18,14 +18,13 @@ function generateData(eventData) {
 export async function sendEvent(eventData) {
     const data = generateData(eventData)
 
-    const prompt = await generatePrompt('simple-bot', {
-        name: 'Blake',
-        userMessage: JSON.stringify(data)
+    const systemPrompt = await generatePrompt('simple-bot-refined', {
+        name: 'Blake'
     })
 
-    console.info('Prompting:', prompt)
+    console.info('System prompt:', systemPrompt)
 
-    const response = await promptLlm(prompt)
+    const response = await promptLlm(systemPrompt, JSON.stringify(data))
 
     try {
         return JSON.parse(response.response)
