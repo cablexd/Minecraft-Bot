@@ -28,3 +28,7 @@ The current prompt is causing the LLM to hallucinate a lot of random things in t
 I think it needs to be shortened.
 
 Updated the system prompt to actually use the `system` key in the POST request to the LLM. After also updating the prompt slightly, it seems to be hallucinating less.
+
+So much pain. LLM keeps hallucinating. Just gets a lot of things wrong in general.
+Including response examples seems to help a little.
+I'll probably try using a completely different LLM.
