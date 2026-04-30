@@ -39,6 +39,10 @@ export function chat(message) {
     bot.chat(message)
 }
 
+export function whisper(username, message) {
+    bot.whisper(username, message)
+}
+
 export function getSurroundingBlocks() {
     checkInitialized()
 

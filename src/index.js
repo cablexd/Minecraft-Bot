@@ -1,5 +1,4 @@
 import 'dotenv/config'
-import { initialize as initializeMemories, saveMemoriesToFile } from './memories-manager.js'
 import { saveState } from './state-manager.js'
 import { connect as connectMinecraftClient } from './minecraft-client.js'
 import { start } from './orchestrator.js'
@@ -15,6 +14,5 @@ process.on('SIGINT', () => {
 })
 process.on('exit', onExit)
 
-initializeMemories()
 connectMinecraftClient()
 start()

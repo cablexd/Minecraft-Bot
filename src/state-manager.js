@@ -15,16 +15,43 @@ export function saveState() {
 }
 
 function loadState() {
+    let state = {}
+
     try {
         if (fs.existsSync(FILE_PATH)) {
             console.info('Loading state')
             const rawData = fs.readFileSync(FILE_PATH, 'utf8')
-            return (rawData === '') ? {} : JSON.parse(rawData)
+            state = (rawData === '') ? {} : JSON.parse(rawData)
         }
-
-        return {}
     } catch (err) {
         console.error(`Error loading JSON from ${FILE_PATH}:`, err)
-        return {}
     }
+
+    if (state.memories == null) state.memories = []
+
+    return state
+}
+
+/* Memories */
+
+/**
+ * Calculates the next ID based strictly on the target array
+ */
+function getNextId(array) {
+    if (array.length === 0) return 0
+    return Math.max(...array.map(m => m.id)) + 1
+}
+
+export function addMemory(memory, priority, category) {
+    STATE.memories.push({
+        id: getNextId(STATE.memories),
+        category,
+        priority,
+        memory,
+        timestamp: Date.now()
+    })
+}
+
+export function removeMemory(id) {
+    STATE.memories = STATE.memories.filter(m => m.id !== id)
 }

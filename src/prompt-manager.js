@@ -1,6 +1,5 @@
 import fs from 'fs/promises'
 import path from 'path'
-import { shortTermMemories, longTermMemories } from './memories-manager.js'
 import { STATE } from './state-manager.js'
 import { promptLlm } from './llm-client.js'
 import { getSurroundingBlocks } from './minecraft-client.js'
@@ -9,8 +8,7 @@ function generateData(eventData) {
     const data = {}
     data.event = eventData
     data.position = `${parseInt(STATE.position.x)},${parseInt(STATE.position.y)},${parseInt(STATE.position.z)}`
-    data.shortTermMemories = shortTermMemories
-    data.longTermMemories = longTermMemories
+    data.memories = STATE.memories
     data.relativeBlocks = getSurroundingBlocks()
     return data
 }
