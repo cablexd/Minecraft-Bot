@@ -16,15 +16,17 @@ function generateData(eventData) {
 }
 
 export async function sendEvent(eventData) {
-    const data = generateData(eventData)
-
     const systemPrompt = await generatePrompt('simple-bot-refined', {
         name: 'Blake'
     })
 
-    console.info('System prompt:', systemPrompt)
+    const data = generateData(eventData)
+    const prompt = JSON.stringify(data)
 
-    const response = await promptLlm(systemPrompt, JSON.stringify(data))
+    console.info('System prompt:', systemPrompt)
+    console.info('Prompt:', data)
+
+    const response = await promptLlm(systemPrompt, prompt)
 
     try {
         return JSON.parse(response.response)
